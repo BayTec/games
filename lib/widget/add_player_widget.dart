@@ -25,6 +25,7 @@ class AddPlayerWidget extends StatelessWidget {
                 controller: nameController,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(hintText: 'Name'),
+                autofocus: true,
               ),
             ),
             Row(
