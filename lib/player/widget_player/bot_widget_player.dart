@@ -172,7 +172,7 @@ class BotWidgetPlayer extends StatefulWidget implements WidgetPlayer {
 }
 
 class _BotWidgetPlayerState extends State<BotWidgetPlayer> {
-  late final turnScore;
+  late final int turnScore;
 
   @override
   void initState() {
