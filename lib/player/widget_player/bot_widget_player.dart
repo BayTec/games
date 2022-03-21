@@ -172,10 +172,12 @@ class BotWidgetPlayer extends StatefulWidget implements WidgetPlayer {
 }
 
 class _BotWidgetPlayerState extends State<BotWidgetPlayer> {
+  late final int oldScore;
   late final int turnScore;
 
   @override
   void initState() {
+    oldScore = widget.score();
     turnScore = widget.turn();
 
     super.initState();
@@ -186,7 +188,7 @@ class _BotWidgetPlayerState extends State<BotWidgetPlayer> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.name()),
-        leading: null,
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Column(
@@ -214,8 +216,8 @@ class _BotWidgetPlayerState extends State<BotWidgetPlayer> {
               },
             ),
             Text('Turn Score: $turnScore'),
-            Text('New Total Score: ${turnScore + widget.score()}'),
-            Text('Current Total Score: ${widget.score()}'),
+            Text('New Total Score: ${widget.score()}'),
+            Text('Old Total Score: $oldScore'),
           ],
         ),
       ),

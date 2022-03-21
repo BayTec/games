@@ -28,7 +28,44 @@ class _WidgetGameState extends State<WidgetGame> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Game')),
+      appBar: AppBar(
+        title: const Text('Game'),
+        leading: IconButton(
+          onPressed: () async {
+            bool quit = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Quit'),
+                    content:
+                        const Text('Are you shure you want to quit the game?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, false);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, true);
+                        },
+                        child: const Text(
+                          'Quit',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+                ) ??
+                false;
+
+            if (quit) {
+              Navigator.pop(context);
+            }
+          },
+          icon: const Icon(Icons.cancel),
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -43,12 +80,6 @@ class _WidgetGameState extends State<WidgetGame> {
                 title: Text('${player.name()}: ${player.score()}'),
               );
             },
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Exit'),
           ),
         ],
       ),

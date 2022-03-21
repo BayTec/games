@@ -28,37 +28,33 @@ class AddPlayerWidget extends StatelessWidget {
                 autofocus: true,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop<WidgetPlayer>(
-                            context, InputWidgetPlayer(nameController.text));
-                      },
-                      child: const Text('Add Player'),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop<WidgetPlayer>(
-                            context, BotWidgetPlayer(nameController.text));
-                      },
-                      child: const Text('Add Bot'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.pop<WidgetPlayer>(
+                    context, InputWidgetPlayer(nameController.text));
+              },
+              child: const Icon(Icons.person),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.pop<WidgetPlayer>(
+                    context, BotWidgetPlayer(nameController.text));
+              },
+              child: const Icon(Icons.computer),
+            ),
+          ),
+        ],
       ),
     );
   }
