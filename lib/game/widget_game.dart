@@ -77,7 +77,14 @@ class _WidgetGameState extends State<WidgetGame> {
             itemBuilder: (context, index) {
               final player = widget.players()[index];
               return ListTile(
-                title: Text('${player.name()}: ${player.score()}'),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(player.name()),
+                    const Text(':'),
+                    Text(player.score().toString()),
+                  ],
+                ),
               );
             },
           ),
