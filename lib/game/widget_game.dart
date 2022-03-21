@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:six_dice/game/game.dart';
 import 'package:six_dice/player/player.dart';
 import 'package:six_dice/player/widget_player/widget_player.dart';
-import 'package:six_dice/widget/winners_widget.dart';
+import 'package:six_dice/widget/gameover_widget.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   final List<WidgetPlayer> _players;
-  final List<Player> winners;
+  final List<List<Player>> finishedPlayers;
 
   WidgetGame(this._players, {Key? key})
-      : winners = [],
+      : finishedPlayers = [[]],
         super(key: key);
 
   @override
@@ -24,6 +24,7 @@ class WidgetGame extends StatefulWidget implements Game {
 
 class _WidgetGameState extends State<WidgetGame> {
   WidgetPlayer? currentPlayer;
+  int finishedPlayersIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +98,7 @@ class _WidgetGameState extends State<WidgetGame> {
 
           int startIndex = widget
               .players()
-              .indexWhere((element) => element.name() == currentPlayer!.name());
+              .indexWhere((element) => element == currentPlayer);
 
           do {
             for (int i = startIndex; i < widget.players().length; i++) {
@@ -112,7 +113,8 @@ class _WidgetGameState extends State<WidgetGame> {
                   true;
 
               if (currentPlayer!.score() >= 5000) {
-                widget.winners.add(currentPlayer!);
+                widget.finishedPlayers[finishedPlayersIndex]
+                    .add(currentPlayer!);
               }
 
               setState(() {});
@@ -122,14 +124,25 @@ class _WidgetGameState extends State<WidgetGame> {
               }
             }
 
+            for (final player in widget.finishedPlayers[finishedPlayersIndex]) {
+              widget.players().remove(player);
+            }
+
             startIndex = 0;
 
-            if (turn && widget.winners.isNotEmpty) {
-              await Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => WinnersWidget(widget.winners)));
-              break;
+            if (turn &&
+                widget.finishedPlayers[finishedPlayersIndex].isNotEmpty) {
+              if (widget.players().isEmpty) {
+                await Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            GameoverWidget(widget.finishedPlayers)));
+                break;
+              }
+
+              finishedPlayersIndex++;
+              widget.finishedPlayers.add([]);
             }
           } while (turn);
         },

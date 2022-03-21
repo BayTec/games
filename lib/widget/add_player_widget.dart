@@ -42,6 +42,7 @@ class AddPlayerWidget extends StatelessWidget {
                     context, InputWidgetPlayer(nameController.text));
               },
               child: const Icon(Icons.person),
+              heroTag: UniqueKey(),
             ),
           ),
           Padding(
@@ -52,6 +53,7 @@ class AddPlayerWidget extends StatelessWidget {
                     context, BotWidgetPlayer(nameController.text));
               },
               child: const Icon(Icons.computer),
+              heroTag: UniqueKey(),
             ),
           ),
         ],
