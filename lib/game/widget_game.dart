@@ -23,6 +23,8 @@ class WidgetGame extends StatefulWidget implements Game {
 }
 
 class _WidgetGameState extends State<WidgetGame> {
+  WidgetPlayer? currentPlayer;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,39 +45,57 @@ class _WidgetGameState extends State<WidgetGame> {
             },
           ),
           ElevatedButton(
-            onPressed: () async {
-              for (final player in widget.players()) {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => player.widget(),
-                  ),
-                );
-
-                if (player.score() >= 5000) {
-                  setState(() {
-                    widget.winners.add(player);
-                  });
-                }
-              }
-              if (widget.winners.isNotEmpty) {
-                await Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => WinnersWidget(widget.winners)));
-              } else {
-                setState(() {});
-              }
-            },
-            child: const Text('Turn'),
-          ),
-          ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
             },
             child: const Text('Exit'),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          currentPlayer ??= widget.players().first;
+          bool turn = true;
+
+          int startIndex = widget
+              .players()
+              .indexWhere((element) => element.name() == currentPlayer!.name());
+
+          do {
+            for (int i = startIndex; i < widget.players().length; i++) {
+              currentPlayer = widget.players()[i];
+
+              turn = await Navigator.push<bool?>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => currentPlayer!.widget(),
+                    ),
+                  ) ??
+                  true;
+
+              if (currentPlayer!.score() >= 5000) {
+                widget.winners.add(currentPlayer!);
+              }
+
+              setState(() {});
+
+              if (!turn) {
+                break;
+              }
+            }
+
+            startIndex = 0;
+
+            if (turn && widget.winners.isNotEmpty) {
+              await Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WinnersWidget(widget.winners)));
+              break;
+            }
+          } while (turn);
+        },
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }

@@ -172,13 +172,22 @@ class BotWidgetPlayer extends StatefulWidget implements WidgetPlayer {
 }
 
 class _BotWidgetPlayerState extends State<BotWidgetPlayer> {
-  bool turnDone = false;
-  int turnScore = 0;
+  late final turnScore;
+
+  @override
+  void initState() {
+    turnScore = widget.turn();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.name())),
+      appBar: AppBar(
+        title: Text(widget.name()),
+        leading: null,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -205,26 +214,19 @@ class _BotWidgetPlayerState extends State<BotWidgetPlayer> {
               },
             ),
             Text('Turn Score: $turnScore'),
-            Text('Total Score: ${widget.score()}'),
-            ElevatedButton(
-              onPressed: () {
-                if (turnDone) {
-                  setState(() {
-                    turnDone = false;
-                    widget._rolls.clear();
-                  });
-                  Navigator.pop(context);
-                } else {
-                  setState(() {
-                    turnScore = widget.turn();
-                    turnDone = true;
-                  });
-                }
-              },
-              child: turnDone ? const Text('Next') : const Text('Roll'),
-            ),
+            Text('New Total Score: ${turnScore + widget.score()}'),
+            Text('Current Total Score: ${widget.score()}'),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            widget._rolls.clear();
+          });
+          Navigator.pop(context);
+        },
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }

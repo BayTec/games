@@ -36,12 +36,40 @@ class InputWidgetPlayer extends StatefulWidget implements WidgetPlayer {
 }
 
 class _InputWidgetPlayerState extends State<InputWidgetPlayer> {
-  bool turnDone = false;
+  int turnScore = 0;
+
+  void turnScoreListener() {
+    setState(() {
+      turnScore = int.tryParse(widget._scoreController.text) ?? 0;
+    });
+  }
+
+  @override
+  void initState() {
+    widget._scoreController.addListener(turnScoreListener);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget._scoreController.removeListener(turnScoreListener);
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.name())),
+      appBar: AppBar(
+        title: Text(widget.name()),
+        leading: IconButton(
+          icon: const Icon(Icons.list_alt),
+          onPressed: () {
+            Navigator.pop(context, false);
+          },
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,24 +84,18 @@ class _InputWidgetPlayerState extends State<InputWidgetPlayer> {
                 autofocus: true,
               ),
             ),
-            Text('Total Score: ${widget.score()}'),
-            ElevatedButton(
-              onPressed: () {
-                if (turnDone) {
-                  turnDone = false;
-                  widget._scoreController.clear();
-                  Navigator.pop(context);
-                } else {
-                  setState(() {
-                    widget.turn();
-                    turnDone = true;
-                  });
-                }
-              },
-              child: turnDone ? const Text('Next') : const Text('Submit'),
-            ),
+            Text('New Total Score: ${turnScore + widget.score()}'),
+            Text('Current Total Score: ${widget.score()}'),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          widget.turn();
+          widget._scoreController.clear();
+          Navigator.pop(context, true);
+        },
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }
