@@ -95,13 +95,13 @@ class _InputWidgetPlayerState extends State<InputWidgetPlayer> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          if (350 > (int.tryParse(widget._scoreController.text) ?? 0)) {
+          if (350 > turnScore && turnScore != 0) {
             await showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
                       title: const Text('Score to low'),
-                      content:
-                          const Text('Your score needs to be at least 350.'),
+                      content: const Text(
+                          'Your score needs to be at least 350 or 0.'),
                       actions: [
                         TextButton(
                           onPressed: () {
@@ -112,8 +112,7 @@ class _InputWidgetPlayerState extends State<InputWidgetPlayer> {
                       ],
                     ));
           } else {
-            final testFiftyStepsDouble =
-                ((int.tryParse(widget._scoreController.text) ?? 0) / 50);
+            final testFiftyStepsDouble = (turnScore / 50);
             final testFiftyStepsInt = testFiftyStepsDouble.floor();
 
             bool? awnser;
@@ -143,10 +142,7 @@ class _InputWidgetPlayerState extends State<InputWidgetPlayer> {
             if (awnser != null) {
               if (awnser) {
                 widget._scoreController.text =
-                    (((int.tryParse(widget._scoreController.text) ?? 0) / 50)
-                                .floor() *
-                            50)
-                        .toString();
+                    ((turnScore / 50).floor() * 50).toString();
 
                 widget.turn();
                 widget._scoreController.clear();
