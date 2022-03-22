@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:six_dice/game/game.dart';
 import 'package:six_dice/player/player.dart';
 import 'package:six_dice/player/widget_player/widget_player.dart';
+import 'package:six_dice/widget/finished_players_widget.dart';
 import 'package:six_dice/widget/gameover_widget.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
@@ -67,29 +68,67 @@ class _WidgetGameState extends State<WidgetGame> {
           icon: const Icon(Icons.cancel),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const Text('Scores'),
-          ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: widget.players().length,
-            itemBuilder: (context, index) {
-              final player = widget.players()[index];
-              return ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(player.name()),
-                    const Text(':'),
-                    Text(player.score().toString()),
-                  ],
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text('Scores'),
                 ),
-              );
-            },
-          ),
-        ],
+                Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  border: const TableBorder(
+                      horizontalInside: BorderSide(color: Colors.black)),
+                  children: List.generate(
+                    widget.players().length,
+                    (index) {
+                      final player = widget.players()[index];
+                      return TableRow(
+                        children: [
+                          TableCell(
+                            child: SizedBox(
+                              height: 40,
+                              child: Center(
+                                child: Text(
+                                  player.name(),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: SizedBox(
+                              height: 40,
+                              child: Center(
+                                child: Text(
+                                  player.score().toString(),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text('Finished players'),
+                ),
+                FinishedPlayersWidget(finischedPlayers: widget.finishedPlayers)
+              ],
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
