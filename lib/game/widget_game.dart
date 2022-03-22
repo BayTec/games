@@ -182,6 +182,19 @@ class _WidgetGameState extends State<WidgetGame> {
 
               finishedPlayersIndex++;
               widget.finishedPlayers.add([]);
+
+              if (widget.players().length == 1) {
+                final player = widget.players().first;
+                widget.finishedPlayers[finishedPlayersIndex].add(player);
+                widget.players().remove(player);
+
+                await Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            GameoverWidget(widget.finishedPlayers)));
+                break;
+              }
             }
           } while (turn);
         },
