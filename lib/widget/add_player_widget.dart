@@ -21,11 +21,15 @@ class AddPlayerWidget extends StatelessWidget {
             const Text('New Player:'),
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: TextField(
-                controller: nameController,
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(hintText: 'Name'),
-                autofocus: true,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: TextField(
+                  controller: nameController,
+                  keyboardType: TextInputType.name,
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(hintText: 'Name'),
+                  autofocus: true,
+                ),
               ),
             ),
           ],

@@ -77,11 +77,15 @@ class _InputWidgetPlayerState extends State<InputWidgetPlayer> {
             Text(widget.name()),
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: TextField(
-                controller: widget._scoreController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(hintText: 'score'),
-                autofocus: true,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: TextField(
+                  controller: widget._scoreController,
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(hintText: 'score'),
+                  autofocus: true,
+                ),
               ),
             ),
             Text('New Total Score: ${turnScore + widget.score()}'),
