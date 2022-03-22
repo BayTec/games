@@ -94,10 +94,70 @@ class _InputWidgetPlayerState extends State<InputWidgetPlayer> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          widget.turn();
-          widget._scoreController.clear();
-          Navigator.pop(context, true);
+        onPressed: () async {
+          if (350 > (int.tryParse(widget._scoreController.text) ?? 0)) {
+            await showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: const Text('Score to low'),
+                      content:
+                          const Text('Your score needs to be at least 350.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ));
+          } else {
+            final testFiftyStepsDouble =
+                ((int.tryParse(widget._scoreController.text) ?? 0) / 50);
+            final testFiftyStepsInt = testFiftyStepsDouble.floor();
+
+            bool? awnser;
+
+            if ((testFiftyStepsDouble - testFiftyStepsInt) > 0) {
+              awnser = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        title: const Text('Score not in 50s'),
+                        content: const Text(
+                            'The score you entered is not stepped in 50.'),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, false);
+                              },
+                              child: const Text('Cancel')),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, true);
+                              },
+                              child: const Text('Round'))
+                        ],
+                      ));
+            }
+
+            if (awnser != null) {
+              if (awnser) {
+                widget._scoreController.text =
+                    (((int.tryParse(widget._scoreController.text) ?? 0) / 50)
+                                .floor() *
+                            50)
+                        .toString();
+
+                widget.turn();
+                widget._scoreController.clear();
+                Navigator.pop(context, true);
+              }
+            } else {
+              widget.turn();
+              widget._scoreController.clear();
+              Navigator.pop(context, true);
+            }
+          }
         },
         child: const Icon(Icons.arrow_forward),
       ),
