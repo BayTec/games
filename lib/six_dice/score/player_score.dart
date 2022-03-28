@@ -1,4 +1,4 @@
-import 'package:six_dice/score/score.dart';
+import 'package:six_dice/six_dice/score/score.dart';
 
 class PlayerScore implements Score {
   int _value;

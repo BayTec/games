@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/player/player.dart';
-import 'package:six_dice/widget/finished_players_widget.dart';
+import 'package:six_dice/six_dice/player/player.dart';
+import 'package:six_dice/six_dice/widget/finished_players_widget.dart';
 
 class GameoverWidget extends StatelessWidget {
   final List<List<Player>> finischedPlayers;

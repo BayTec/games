@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/widget/welcome_widget.dart';
+import 'package:six_dice/six_dice/widget/six_dice_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.yellow,
       ),
-      home: const WelcomeWidget(),
+      home: const SixDiceWidget(),
     );
   }
 }

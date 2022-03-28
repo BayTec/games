@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/dice/dice.dart';
+import 'package:six_dice/six_dice/dice/dice.dart';
 
 class WidgetSixDice extends StatelessWidget implements Dice {
   final Dice _dice;

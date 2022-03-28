@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/dice/clone_dice.dart';
-import 'package:six_dice/dice/six_dice.dart';
-import 'package:six_dice/dice/widget_six_dice.dart';
-import 'package:six_dice/player/widget_player/widget_player.dart';
-import 'package:six_dice/score/player_score.dart';
-import 'package:six_dice/score/score.dart';
+import 'package:six_dice/six_dice/dice/clone_dice.dart';
+import 'package:six_dice/six_dice/dice/six_dice.dart';
+import 'package:six_dice/six_dice/dice/widget_six_dice.dart';
+import 'package:six_dice/six_dice/player/widget_player/widget_player.dart';
+import 'package:six_dice/six_dice/score/player_score.dart';
+import 'package:six_dice/six_dice/score/score.dart';
 
 import '../../dice/dice.dart';
 

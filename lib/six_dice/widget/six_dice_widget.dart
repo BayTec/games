@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/game/widget_game.dart';
-import 'package:six_dice/player/widget_player/input_widget_player.dart';
-import 'package:six_dice/player/widget_player/widget_player.dart';
-import 'package:six_dice/widget/add_player_widget.dart';
+import 'package:six_dice/six_dice/game/widget_game.dart';
+import 'package:six_dice/six_dice/player/widget_player/input_widget_player.dart';
+import 'package:six_dice/six_dice/player/widget_player/widget_player.dart';
+import 'package:six_dice/six_dice/widget/add_player_widget.dart';
 
-class WelcomeWidget extends StatefulWidget {
-  const WelcomeWidget({Key? key}) : super(key: key);
+class SixDiceWidget extends StatefulWidget {
+  const SixDiceWidget({Key? key}) : super(key: key);
 
   @override
-  State<WelcomeWidget> createState() => _WelcomeWidgetState();
+  State<SixDiceWidget> createState() => _SixDiceWidgetState();
 }
 
-class _WelcomeWidgetState extends State<WelcomeWidget> {
+class _SixDiceWidgetState extends State<SixDiceWidget> {
   final List<WidgetPlayer> players = [];
 
   @override

@@ -1,4 +1,4 @@
-import 'package:six_dice/dice/dice.dart';
+import 'package:six_dice/six_dice/dice/dice.dart';
 
 class CloneDice implements Dice {
   final int _value;

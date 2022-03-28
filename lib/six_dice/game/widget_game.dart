@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/game/game.dart';
-import 'package:six_dice/player/player.dart';
-import 'package:six_dice/player/widget_player/widget_player.dart';
-import 'package:six_dice/widget/finished_players_widget.dart';
-import 'package:six_dice/widget/gameover_widget.dart';
+import 'package:six_dice/six_dice/game/game.dart';
+import 'package:six_dice/six_dice/player/player.dart';
+import 'package:six_dice/six_dice/player/widget_player/widget_player.dart';
+import 'package:six_dice/six_dice/widget/finished_players_widget.dart';
+import 'package:six_dice/six_dice/widget/gameover_widget.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   final List<WidgetPlayer> _players;
