@@ -65,8 +65,9 @@ class _InputPlayerWidgetState extends State<InputPlayerWidget> {
         .toList();
 
     final additionalKniffelSelectable = !openFields.any(
-      (element) => element.key == 'kniffel',
-    );
+          (element) => element.key == 'kniffel',
+        ) &&
+        widget.player.score().fields()['kniffel'] != 0;
 
     return Scaffold(
       appBar: AppBar(
