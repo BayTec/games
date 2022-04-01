@@ -110,7 +110,7 @@ class _WidgetGameState extends State<WidgetGame> {
                   .toList());
             }
 
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => GameoverWidget(widget._winners)));
