@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:six_dice/kniffel/game/game.dart';
 import 'package:six_dice/kniffel/player/player.dart';
@@ -9,7 +7,7 @@ import 'package:six_dice/store/store.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   WidgetGame(this._players, {Key? key})
-      : _winners = [[]],
+      : _winners = [],
         pausedStore = PropertyStore(false),
         super(key: key);
 
