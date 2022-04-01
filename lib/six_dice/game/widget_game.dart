@@ -17,9 +17,6 @@ class WidgetGame extends StatefulWidget implements Game {
   State<WidgetGame> createState() => _WidgetGameState();
 
   @override
-  void play() {}
-
-  @override
   List<WidgetPlayer> players() => _players;
 }
 
