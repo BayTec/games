@@ -4,6 +4,7 @@ import 'package:six_dice/six_dice/player/player.dart';
 import 'package:six_dice/six_dice/player/widget_player/widget_player.dart';
 import 'package:six_dice/six_dice/widget/finished_players_widget.dart';
 import 'package:six_dice/six_dice/widget/gameover_widget.dart';
+import 'package:six_dice/widget/quit_game_button.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   final List<WidgetPlayer> _players;
@@ -29,41 +30,7 @@ class _WidgetGameState extends State<WidgetGame> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game'),
-        leading: IconButton(
-          onPressed: () async {
-            bool quit = await showDialog<bool>(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Quit'),
-                    content:
-                        const Text('Are you shure you want to quit the game?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context, false);
-                        },
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                        child: const Text(
-                          'Quit',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ],
-                  ),
-                ) ??
-                false;
-
-            if (quit) {
-              Navigator.pop(context);
-            }
-          },
-          icon: const Icon(Icons.cancel),
-        ),
+        leading: const QuitGameButton(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),

@@ -32,38 +32,67 @@ class HomeWidget extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(title: const Text('Home')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: ElevatedButton(
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SixDiceWidget())),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Six Dice'),
-                  Icon(Icons.arrow_forward),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          children: [
+            Hero(
+              tag: 'six_dice',
+              child: Material(
+                child: GameKachel(
+                  title: const Text('Six Dice'),
+                  route: () => MaterialPageRoute(
+                    builder: (context) => const SixDiceWidget(),
+                  ),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: ElevatedButton(
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const KniffelWidget())),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Kniffel'),
-                  Icon(Icons.arrow_forward),
-                ],
+            Hero(
+              tag: 'kniffel',
+              child: Material(
+                child: GameKachel(
+                  title: const Text('Kniffel'),
+                  route: () => MaterialPageRoute(
+                    builder: (context) => const KniffelWidget(),
+                  ),
+                ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class GameKachel extends StatelessWidget {
+  const GameKachel({
+    required this.title,
+    required this.route,
+    Key? key,
+  }) : super(key: key);
+
+  final Widget title;
+  final MaterialPageRoute Function() route;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.push(context, route());
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          title,
+          const Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 12.0),
+              child: Icon(Icons.arrow_forward),
             ),
           ),
         ],

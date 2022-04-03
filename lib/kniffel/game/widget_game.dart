@@ -4,6 +4,7 @@ import 'package:six_dice/kniffel/player/player.dart';
 import 'package:six_dice/kniffel/widget/gameover_widget.dart';
 import 'package:six_dice/store/property_container.dart';
 import 'package:six_dice/store/store.dart';
+import 'package:six_dice/widget/quit_game_button.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   WidgetGame(this._players, {Key? key})
@@ -42,7 +43,10 @@ class _WidgetGameState extends State<WidgetGame> {
     final fields = players.first.score().fields();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Kniffel')),
+      appBar: AppBar(
+        title: const Text('Kniffel'),
+        leading: const QuitGameButton(),
+      ),
       body: Column(
         children: [
           Padding(
