@@ -84,22 +84,27 @@ class _InputPlayerWidgetState extends State<InputPlayerWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: openFields.length,
-              itemBuilder: (context, index) {
-                final entry = openFields[index];
-                return RadioListTile(
-                  title: Text(entry.key),
-                  value: entry.key,
-                  groupValue: selectedKey,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedKey = value != null ? value.toString() : '';
-                    });
-                  },
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                physics: const ScrollPhysics(),
+                shrinkWrap: true,
+                itemExtent: 35.0,
+                itemCount: openFields.length,
+                itemBuilder: (context, index) {
+                  final entry = openFields[index];
+                  return RadioListTile(
+                    title: Text(entry.key),
+                    value: entry.key,
+                    groupValue: selectedKey,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedKey = value != null ? value.toString() : '';
+                      });
+                    },
+                  );
+                },
+              ),
             ),
             CheckboxListTile(
               title: const Text('Additional Kniffel'),
