@@ -53,15 +53,44 @@ class _WidgetGameState extends State<WidgetGame> {
                 Table(
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   border: const TableBorder(
-                      horizontalInside: BorderSide(color: Colors.black)),
-                  children: List.generate(
-                      fields.length,
-                      (index) => TableRow(
-                          children: List.generate(
-                              players.length,
-                              (index) => TableCell(
-                                  child:
-                                      Container())))), //TODO: replace the container with actual content
+                    horizontalInside: BorderSide(color: Colors.black),
+                    verticalInside: BorderSide(color: Colors.black),
+                  ),
+                  children: List.generate(fields.length + 1, (rowIndex) {
+                    return TableRow(
+                        children:
+                            List.generate(players.length + 1, (columnIndex) {
+                      late final String content;
+
+                      if (rowIndex == 0) {
+                        if (columnIndex == 0) {
+                          content = '';
+                        } else {
+                          content = players[columnIndex - 1].name();
+                        }
+                      } else if (columnIndex == 0) {
+                        content = fields.entries.toList()[rowIndex - 1].key;
+                      } else {
+                        final value = players[columnIndex - 1]
+                            .score()
+                            .fields()
+                            .entries
+                            .toList()[rowIndex - 1]
+                            .value;
+                        content = value == null ? '' : value.toString();
+                      }
+
+                      return TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            content,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }));
+                  }),
                 )
               ],
             ),
@@ -114,6 +143,8 @@ class _WidgetGameState extends State<WidgetGame> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => GameoverWidget(widget._winners)));
+          } else {
+            setState(() {});
           }
         },
         child: const Icon(Icons.refresh),
