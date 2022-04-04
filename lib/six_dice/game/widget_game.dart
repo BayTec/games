@@ -9,7 +9,7 @@ import 'package:six_dice/widget/quit_game_button.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   WidgetGame(this._players, {Key? key})
-      : _finishedPlayers = [[]],
+      : _finishedPlayers = [],
         pausedStore = PropertyStore(false),
         super(key: key);
 
@@ -36,7 +36,6 @@ class WidgetGame extends StatefulWidget implements Game {
 
 class _WidgetGameState extends State<WidgetGame> {
   int? currentPlayerIndex;
-  int finishedPlayersIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -128,21 +127,24 @@ class _WidgetGameState extends State<WidgetGame> {
               break;
             }
 
-            for (final player in players) {
-              if (player.score().getValue() >= 5000) {
-                widget._finishedPlayers[finishedPlayersIndex].add(player);
+            if (players.any((element) => element.score().getValue() >= 5000)) {
+              final List<Player> playersFinished = [];
+              for (final player in players) {
+                if (player.score().getValue() >= 5000) {
+                  playersFinished.add(player);
+                }
               }
+
+              for (final player in playersFinished) {
+                players.remove(player);
+              }
+
+              widget._finishedPlayers.add(playersFinished);
             }
 
-            for (final player
-                in widget._finishedPlayers[finishedPlayersIndex]) {
-              players.remove(player);
-            }
-
-            if (widget._finishedPlayers[finishedPlayersIndex].isNotEmpty &&
-                players.isNotEmpty) {
-              widget._finishedPlayers.add([]);
-              finishedPlayersIndex++;
+            if (players.length == 1) {
+              widget._finishedPlayers.add([players.last]);
+              players.remove(players.removeLast());
             }
 
             currentPlayerIndex = 0;
