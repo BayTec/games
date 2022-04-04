@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.six_dice">
+    package="com.example.classic_games">
    <application
-        android:label="six_dice"
+        android:label="classic_games"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

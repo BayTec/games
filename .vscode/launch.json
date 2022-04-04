@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "six_dice",
+            "name": "classic_games",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "six_dice (profile mode)",
+            "name": "classic_games (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "six_dice (release mode)",
+            "name": "classic_games (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

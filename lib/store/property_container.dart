@@ -1,4 +1,4 @@
-import 'package:six_dice/store/store.dart';
+import 'package:classic_games/store/store.dart';
 
 class PropertyStore<T> implements Store<T> {
   T _property;

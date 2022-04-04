@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(six_dice LANGUAGES CXX)
+project(classic_games LANGUAGES CXX)
 
-set(BINARY_NAME "six_dice")
+set(BINARY_NAME "classic_games")
 
 cmake_policy(SET CMP0063 NEW)
 

@@ -1,4 +1,4 @@
-import 'package:six_dice/kniffel/player/player.dart';
+import 'package:classic_games/kniffel/player/player.dart';
 
 abstract class Game {
   List<Player> players();

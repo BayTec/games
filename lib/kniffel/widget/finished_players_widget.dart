@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/kniffel/player/player.dart';
+import 'package:classic_games/kniffel/player/player.dart';
 
 class FinishedPlayersWidget extends StatelessWidget {
   const FinishedPlayersWidget({

@@ -1,4 +1,4 @@
-import 'package:six_dice/kniffel/score/score.dart';
+import 'package:classic_games/kniffel/score/score.dart';
 
 class KniffelScore implements Score {
   final Map<String, int?> _fields;

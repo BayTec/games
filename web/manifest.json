@@ -1,6 +1,6 @@
 {
-    "name": "six_dice",
-    "short_name": "six_dice",
+    "name": "classic_games",
+    "short_name": "classic_games",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

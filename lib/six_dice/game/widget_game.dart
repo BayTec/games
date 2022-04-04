@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/six_dice/game/game.dart';
-import 'package:six_dice/six_dice/player/player.dart';
-import 'package:six_dice/six_dice/widget/finished_players_widget.dart';
-import 'package:six_dice/six_dice/widget/gameover_widget.dart';
-import 'package:six_dice/store/property_container.dart';
-import 'package:six_dice/store/store.dart';
-import 'package:six_dice/widget/quit_game_button.dart';
+import 'package:classic_games/six_dice/game/game.dart';
+import 'package:classic_games/six_dice/player/player.dart';
+import 'package:classic_games/six_dice/widget/finished_players_widget.dart';
+import 'package:classic_games/six_dice/widget/gameover_widget.dart';
+import 'package:classic_games/store/property_container.dart';
+import 'package:classic_games/store/store.dart';
+import 'package:classic_games/widget/quit_game_button.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   WidgetGame(this._players, {Key? key})

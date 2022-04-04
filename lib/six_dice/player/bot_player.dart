@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/main.dart';
-import 'package:six_dice/six_dice/dice/clone_dice.dart';
-import 'package:six_dice/six_dice/dice/dice.dart';
-import 'package:six_dice/six_dice/dice/six_dice.dart';
-import 'package:six_dice/six_dice/dice/widget_six_dice.dart';
-import 'package:six_dice/six_dice/player/player.dart';
-import 'package:six_dice/six_dice/score/player_score.dart';
-import 'package:six_dice/six_dice/score/score.dart';
+import 'package:classic_games/main.dart';
+import 'package:classic_games/six_dice/dice/clone_dice.dart';
+import 'package:classic_games/six_dice/dice/dice.dart';
+import 'package:classic_games/six_dice/dice/six_dice.dart';
+import 'package:classic_games/six_dice/dice/widget_six_dice.dart';
+import 'package:classic_games/six_dice/player/player.dart';
+import 'package:classic_games/six_dice/score/player_score.dart';
+import 'package:classic_games/six_dice/score/score.dart';
 
 class BotPlayer implements Player {
   BotPlayer(this._name)

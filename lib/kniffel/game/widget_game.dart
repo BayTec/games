@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/kniffel/game/game.dart';
-import 'package:six_dice/kniffel/player/player.dart';
-import 'package:six_dice/kniffel/widget/gameover_widget.dart';
-import 'package:six_dice/store/property_container.dart';
-import 'package:six_dice/store/store.dart';
-import 'package:six_dice/widget/quit_game_button.dart';
+import 'package:classic_games/kniffel/game/game.dart';
+import 'package:classic_games/kniffel/player/player.dart';
+import 'package:classic_games/kniffel/widget/gameover_widget.dart';
+import 'package:classic_games/store/property_container.dart';
+import 'package:classic_games/store/store.dart';
+import 'package:classic_games/widget/quit_game_button.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   WidgetGame(this._players, {Key? key})

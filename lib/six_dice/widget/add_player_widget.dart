@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/six_dice/game/game.dart';
-import 'package:six_dice/six_dice/player/bot_player.dart';
-import 'package:six_dice/six_dice/player/input_player.dart';
-import 'package:six_dice/six_dice/player/player.dart';
+import 'package:classic_games/six_dice/game/game.dart';
+import 'package:classic_games/six_dice/player/bot_player.dart';
+import 'package:classic_games/six_dice/player/input_player.dart';
+import 'package:classic_games/six_dice/player/player.dart';
 
 class AddPlayerWidget extends StatelessWidget {
   const AddPlayerWidget(this._game, {Key? key}) : super(key: key);

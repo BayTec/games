@@ -1,4 +1,4 @@
-package com.example.six_dice
+package com.example.classic_games
 
 import io.flutter.embedding.android.FlutterActivity
 

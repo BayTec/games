@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/kniffel/game/game.dart';
-import 'package:six_dice/kniffel/player/input_player.dart';
-import 'package:six_dice/kniffel/player/player.dart';
+import 'package:classic_games/kniffel/game/game.dart';
+import 'package:classic_games/kniffel/player/input_player.dart';
+import 'package:classic_games/kniffel/player/player.dart';
 
 class AddPlayerWidget extends StatelessWidget {
   const AddPlayerWidget(this._game, {Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/kniffel/widget/kniffel_widget.dart';
-import 'package:six_dice/six_dice/widget/six_dice_widget.dart';
+import 'package:classic_games/kniffel/widget/kniffel_widget.dart';
+import 'package:classic_games/six_dice/widget/six_dice_widget.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dice Games',
+      title: 'Classic Games',
       theme: ThemeData(
         primarySwatch: Colors.yellow,
       ),
@@ -40,7 +40,7 @@ class HomeWidget extends StatelessWidget {
           crossAxisSpacing: 12,
           children: [
             Hero(
-              tag: 'six_dice',
+              tag: 'classic_games',
               child: Material(
                 child: GameKachel(
                   title: const Text('Six Dice'),

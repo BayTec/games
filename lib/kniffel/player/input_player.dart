@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/kniffel/game/game.dart';
-import 'package:six_dice/kniffel/player/player.dart';
-import 'package:six_dice/kniffel/score/kniffel_score.dart';
-import 'package:six_dice/kniffel/score/score.dart';
-import 'package:six_dice/main.dart';
+import 'package:classic_games/kniffel/game/game.dart';
+import 'package:classic_games/kniffel/player/player.dart';
+import 'package:classic_games/kniffel/score/kniffel_score.dart';
+import 'package:classic_games/kniffel/score/score.dart';
+import 'package:classic_games/main.dart';
 
 class InputPlayer implements Player {
   final String _name;
