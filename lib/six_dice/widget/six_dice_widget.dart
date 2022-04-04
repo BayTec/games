@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:six_dice/six_dice/game/widget_game.dart';
-import 'package:six_dice/six_dice/player/widget_player/input_widget_player.dart';
-import 'package:six_dice/six_dice/player/widget_player/widget_player.dart';
+import 'package:six_dice/six_dice/player/bot_player.dart';
+import 'package:six_dice/six_dice/player/player.dart';
 import 'package:six_dice/six_dice/widget/add_player_widget.dart';
 
 class SixDiceWidget extends StatefulWidget {
@@ -12,13 +12,17 @@ class SixDiceWidget extends StatefulWidget {
 }
 
 class _SixDiceWidgetState extends State<SixDiceWidget> {
-  final List<WidgetPlayer> players = [];
+  // ignoring const because List needs to be extandable
+  // ignore: prefer_const_literals_to_create_immutables
+  final game = WidgetGame([]);
 
   @override
   Widget build(BuildContext context) {
+    var players = game.players();
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Six Dies'),
+        title: const Text('Six Dice'),
       ),
       body: Hero(
         tag: 'six_dice',
@@ -28,7 +32,7 @@ class _SixDiceWidgetState extends State<SixDiceWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const Text(
-                  'Six Dice!',
+                  'Welcome to Six Dice!',
                 ),
                 ListView.builder(
                   shrinkWrap: true,
@@ -36,10 +40,10 @@ class _SixDiceWidgetState extends State<SixDiceWidget> {
                   itemCount: players.length,
                   itemBuilder: (context, index) {
                     final player = players[index];
-                    var icon = Icons.computer;
+                    var icon = Icons.person;
 
-                    if (player.runtimeType == InputWidgetPlayer) {
-                      icon = Icons.person;
+                    if (player.runtimeType == BotPlayer) {
+                      icon = Icons.computer;
                     }
 
                     return ListTile(
@@ -62,7 +66,7 @@ class _SixDiceWidgetState extends State<SixDiceWidget> {
                       await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WidgetGame(players),
+                            builder: (context) => game,
                           ));
                       setState(() {
                         players.clear();
@@ -95,10 +99,10 @@ class _SixDiceWidgetState extends State<SixDiceWidget> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.push<WidgetPlayer>(
+          Navigator.push<Player>(
               context,
               MaterialPageRoute(
-                  builder: (context) => const AddPlayerWidget())).then((value) {
+                  builder: (context) => AddPlayerWidget(game))).then((value) {
             if (value != null) {
               setState(() {
                 players.add(value);

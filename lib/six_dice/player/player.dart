@@ -1,5 +1,7 @@
+import 'package:six_dice/six_dice/score/score.dart';
+
 abstract class Player {
   String name();
-  int score();
-  int turn();
+  Score score();
+  Future<void> turn();
 }

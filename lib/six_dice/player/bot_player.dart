@@ -1,46 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:six_dice/main.dart';
 import 'package:six_dice/six_dice/dice/clone_dice.dart';
+import 'package:six_dice/six_dice/dice/dice.dart';
 import 'package:six_dice/six_dice/dice/six_dice.dart';
 import 'package:six_dice/six_dice/dice/widget_six_dice.dart';
-import 'package:six_dice/six_dice/player/widget_player/widget_player.dart';
+import 'package:six_dice/six_dice/player/player.dart';
 import 'package:six_dice/six_dice/score/player_score.dart';
 import 'package:six_dice/six_dice/score/score.dart';
 
-import '../../dice/dice.dart';
+class BotPlayer implements Player {
+  BotPlayer(this._name)
+      : _score = PlayerScore(),
+        _dices = [
+          SixDice(),
+          SixDice(),
+          SixDice(),
+          SixDice(),
+          SixDice(),
+          SixDice()
+        ];
 
-class BotWidgetPlayer extends StatefulWidget implements WidgetPlayer {
   final String _name;
-  final List<Dice> _dices;
   final Score _score;
-  final List<List<Dice>> _rolls;
-
-  BotWidgetPlayer(this._name, {Key? key})
-      : _dices = [
-          SixDice(),
-          SixDice(),
-          SixDice(),
-          SixDice(),
-          SixDice(),
-          SixDice(),
-        ],
-        _score = PlayerScore(),
-        _rolls = [],
-        super(key: key);
-
-  @override
-  State<BotWidgetPlayer> createState() => _BotWidgetPlayerState();
+  final List<Dice> _dices;
 
   @override
   String name() => _name;
 
   @override
-  int score() => _score.getValue();
+  Score score() => _score;
 
   @override
-  int turn() {
+  Future<void> turn() async {
     int turnScore = 0;
     int prevScore = 0;
     var inDices = <Dice>[];
+    final List<List<Dice>> rolls = [];
     final values = _dices.first.values();
     final Map<int, List<Dice>> mappedDices = {};
 
@@ -57,7 +52,7 @@ class BotWidgetPlayer extends StatefulWidget implements WidgetPlayer {
       for (final dice in inDices) {
         roll.add(CloneDice(dice));
       }
-      _rolls.add(roll);
+      rolls.add(roll);
 
       // split dices by values
       for (final value in values) {
@@ -163,43 +158,54 @@ class BotWidgetPlayer extends StatefulWidget implements WidgetPlayer {
       prevScore = turnScore;
     } while (inDices.isNotEmpty);
 
-    _score.setValue(_score.getValue() + turnScore);
-    return turnScore;
-  }
+    int newScore = score().getValue() + turnScore;
 
-  @override
-  Widget widget() => this;
+    await Navigator.push(
+        scaffoldKey.currentContext!,
+        MaterialPageRoute(
+            builder: (context) => BotPlayerWidget(
+                  name(),
+                  rolls,
+                  turnScore: turnScore,
+                  newScore: newScore,
+                  oldScore: score().getValue(),
+                )));
+
+    score().setValue(newScore);
+  }
 }
 
-class _BotWidgetPlayerState extends State<BotWidgetPlayer> {
-  late final int oldScore;
-  late final int turnScore;
+class BotPlayerWidget extends StatelessWidget {
+  const BotPlayerWidget(
+    this._name,
+    this._rolls, {
+    required this.turnScore,
+    required this.newScore,
+    required this.oldScore,
+    Key? key,
+  }) : super(key: key);
 
-  @override
-  void initState() {
-    oldScore = widget.score();
-    turnScore = widget.turn();
-
-    super.initState();
-  }
+  final String _name;
+  final List<List<Dice>> _rolls;
+  final int turnScore, newScore, oldScore;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name()),
+        title: Text(_name),
         automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(widget.name()),
+            Text(_name),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: widget._rolls.length,
+              itemCount: _rolls.length,
               itemBuilder: (context, index) {
-                final roll = widget._rolls[index];
+                final roll = _rolls[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Row(
@@ -216,16 +222,13 @@ class _BotWidgetPlayerState extends State<BotWidgetPlayer> {
               },
             ),
             Text('Turn Score: $turnScore'),
-            Text('New Total Score: ${widget.score()}'),
+            Text('New Total Score: $newScore'),
             Text('Old Total Score: $oldScore'),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            widget._rolls.clear();
-          });
           Navigator.pop(context);
         },
         child: const Icon(Icons.arrow_forward),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:six_dice/six_dice/player/widget_player/bot_widget_player.dart';
-import 'package:six_dice/six_dice/player/widget_player/input_widget_player.dart';
-import 'package:six_dice/six_dice/player/widget_player/widget_player.dart';
+import 'package:six_dice/six_dice/game/game.dart';
+import 'package:six_dice/six_dice/player/bot_player.dart';
+import 'package:six_dice/six_dice/player/input_player.dart';
+import 'package:six_dice/six_dice/player/player.dart';
 
 class AddPlayerWidget extends StatelessWidget {
-  const AddPlayerWidget({Key? key}) : super(key: key);
+  const AddPlayerWidget(this._game, {Key? key}) : super(key: key);
+
+  final Game _game;
 
   @override
   Widget build(BuildContext context) {
@@ -39,26 +42,22 @@ class AddPlayerWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(bottom: 8.0),
             child: FloatingActionButton(
+              heroTag: 'add_player',
               onPressed: () {
-                Navigator.pop<WidgetPlayer>(
-                    context, InputWidgetPlayer(nameController.text));
+                Navigator.pop<Player>(
+                    context, InputPlayer(nameController.text, _game));
               },
               child: const Icon(Icons.person),
-              heroTag: UniqueKey(),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.pop<WidgetPlayer>(
-                    context, BotWidgetPlayer(nameController.text));
-              },
-              child: const Icon(Icons.computer),
-              heroTag: UniqueKey(),
-            ),
+          FloatingActionButton(
+            heroTag: 'add_bot',
+            onPressed: () {
+              Navigator.pop<Player>(context, BotPlayer(nameController.text));
+            },
+            child: const Icon(Icons.computer),
           ),
         ],
       ),

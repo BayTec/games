@@ -86,6 +86,7 @@ class _InputPlayerWidgetState extends State<InputPlayerWidget> {
           children: [
             Expanded(
               child: ListView.builder(
+                // TODO: Check how a wrap would do
                 scrollDirection: Axis.vertical,
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,

@@ -38,7 +38,10 @@ class FinishedPlayersWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(positionedFinishedPlayers[x].name()),
-                        Text(positionedFinishedPlayers[x].score().toString()),
+                        Text(positionedFinishedPlayers[x]
+                            .score()
+                            .getValue()
+                            .toString()),
                       ],
                     );
                   },

@@ -1,32 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:six_dice/six_dice/game/game.dart';
 import 'package:six_dice/six_dice/player/player.dart';
-import 'package:six_dice/six_dice/player/widget_player/widget_player.dart';
 import 'package:six_dice/six_dice/widget/finished_players_widget.dart';
 import 'package:six_dice/six_dice/widget/gameover_widget.dart';
+import 'package:six_dice/store/property_container.dart';
+import 'package:six_dice/store/store.dart';
 import 'package:six_dice/widget/quit_game_button.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
-  final List<WidgetPlayer> _players;
-  final List<List<Player>> finishedPlayers;
-
   WidgetGame(this._players, {Key? key})
-      : finishedPlayers = [[]],
+      : _finishedPlayers = [[]],
+        pausedStore = PropertyStore(false),
         super(key: key);
+
+  final List<Player> _players;
+  final List<List<Player>> _finishedPlayers;
+  final Store<bool> pausedStore;
 
   @override
   State<WidgetGame> createState() => _WidgetGameState();
 
   @override
-  List<WidgetPlayer> players() => _players;
+  List<Player> players() => _players;
+
+  @override
+  void pause() {
+    pausedStore.set(true);
+  }
+
+  @override
+  void play() {
+    pausedStore.set(false);
+  }
 }
 
 class _WidgetGameState extends State<WidgetGame> {
-  WidgetPlayer? currentPlayer;
+  int? currentPlayerIndex;
   int finishedPlayersIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final players = widget.players();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game'),
@@ -69,7 +84,7 @@ class _WidgetGameState extends State<WidgetGame> {
                               height: 40,
                               child: Center(
                                 child: Text(
-                                  player.score().toString(),
+                                  player.score().getValue().toString(),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -88,7 +103,7 @@ class _WidgetGameState extends State<WidgetGame> {
                   padding: EdgeInsets.all(15.0),
                   child: Text('Finished players'),
                 ),
-                FinishedPlayersWidget(finischedPlayers: widget.finishedPlayers)
+                FinishedPlayersWidget(finischedPlayers: widget._finishedPlayers)
               ],
             ),
           ],
@@ -96,71 +111,52 @@ class _WidgetGameState extends State<WidgetGame> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          currentPlayer ??= widget.players().first;
-          bool turn = true;
-
-          int startIndex = widget
-              .players()
-              .indexWhere((element) => element == currentPlayer);
+          widget.play();
 
           do {
-            for (int i = startIndex; i < widget.players().length; i++) {
-              currentPlayer = widget.players()[i];
+            for (int i = currentPlayerIndex ?? 0; i < players.length; i++) {
+              currentPlayerIndex = i;
+              final player = players[i];
+              await player.turn();
 
-              turn = await Navigator.push<bool?>(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => currentPlayer!.widget(),
-                    ),
-                  ) ??
-                  true;
-
-              if (currentPlayer!.score() >= 5000) {
-                widget.finishedPlayers[finishedPlayersIndex]
-                    .add(currentPlayer!);
-              }
-
-              setState(() {});
-
-              if (!turn) {
+              if (widget.pausedStore.get()) {
                 break;
               }
             }
 
-            for (final player in widget.finishedPlayers[finishedPlayersIndex]) {
-              widget.players().remove(player);
+            if (widget.pausedStore.get()) {
+              break;
             }
 
-            startIndex = 0;
-
-            if (turn &&
-                widget.finishedPlayers[finishedPlayersIndex].isNotEmpty) {
-              if (widget.players().isEmpty) {
-                await Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            GameoverWidget(widget.finishedPlayers)));
-                break;
+            for (final player in players) {
+              if (player.score().getValue() >= 5000) {
+                widget._finishedPlayers[finishedPlayersIndex].add(player);
               }
+            }
 
+            for (final player
+                in widget._finishedPlayers[finishedPlayersIndex]) {
+              players.remove(player);
+            }
+
+            if (widget._finishedPlayers[finishedPlayersIndex].isNotEmpty &&
+                players.isNotEmpty) {
+              widget._finishedPlayers.add([]);
               finishedPlayersIndex++;
-              widget.finishedPlayers.add([]);
-
-              if (widget.players().length == 1) {
-                final player = widget.players().first;
-                widget.finishedPlayers[finishedPlayersIndex].add(player);
-                widget.players().remove(player);
-
-                await Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            GameoverWidget(widget.finishedPlayers)));
-                break;
-              }
             }
-          } while (turn);
+
+            currentPlayerIndex = 0;
+          } while (players.isNotEmpty);
+
+          if (players.isEmpty) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        GameoverWidget(widget._finishedPlayers)));
+          } else {
+            setState(() {});
+          }
         },
         child: const Icon(Icons.arrow_forward),
       ),

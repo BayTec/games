@@ -8,12 +8,12 @@ import 'package:six_dice/widget/quit_game_button.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   WidgetGame(this._players, {Key? key})
-      : _winners = [],
+      : _finishedPlayers = [],
         pausedStore = PropertyStore(false),
         super(key: key);
 
   final List<Player> _players;
-  final List<List<Player>> _winners;
+  final List<List<Player>> _finishedPlayers;
   final Store<bool> pausedStore;
 
   @override
@@ -138,7 +138,7 @@ class _WidgetGameState extends State<WidgetGame> {
             scores = scores.reversed.toList();
 
             for (final score in scores) {
-              widget._winners.add(players
+              widget._finishedPlayers.add(players
                   .where((element) => element.score().total() == score)
                   .toList());
             }
@@ -146,7 +146,8 @@ class _WidgetGameState extends State<WidgetGame> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => GameoverWidget(widget._winners)));
+                    builder: (context) =>
+                        GameoverWidget(widget._finishedPlayers)));
           } else {
             setState(() {});
           }
