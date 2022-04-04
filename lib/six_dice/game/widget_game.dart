@@ -160,7 +160,7 @@ class _WidgetGameState extends State<WidgetGame> {
             setState(() {});
           }
         },
-        child: const Icon(Icons.arrow_forward),
+        child: const Icon(Icons.refresh),
       ),
     );
   }

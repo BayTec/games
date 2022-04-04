@@ -55,7 +55,8 @@ class AddPlayerWidget extends StatelessWidget {
           FloatingActionButton(
             heroTag: 'add_bot',
             onPressed: () {
-              Navigator.pop<Player>(context, BotPlayer(nameController.text));
+              Navigator.pop<Player>(
+                  context, BotPlayer(nameController.text, _game));
             },
             child: const Icon(Icons.computer),
           ),

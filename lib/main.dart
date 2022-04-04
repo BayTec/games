@@ -40,7 +40,7 @@ class HomeWidget extends StatelessWidget {
           crossAxisSpacing: 12,
           children: [
             Hero(
-              tag: 'classic_games',
+              tag: 'six_dice',
               child: Material(
                 child: GameKachel(
                   title: const Text('Six Dice'),
