@@ -58,14 +58,11 @@ class _KniffelWidgetState extends State<KniffelWidget> {
                 ElevatedButton(
                   onPressed: () async {
                     if (players.isNotEmpty) {
-                      await Navigator.push(
+                      await Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => game,
                           ));
-                      setState(() {
-                        players.clear();
-                      });
                     } else {
                       await showDialog(
                           context: context,

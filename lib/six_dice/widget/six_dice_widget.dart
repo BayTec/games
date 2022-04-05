@@ -63,14 +63,11 @@ class _SixDiceWidgetState extends State<SixDiceWidget> {
                 ElevatedButton(
                   onPressed: () async {
                     if (players.isNotEmpty) {
-                      await Navigator.push(
+                      await Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => game,
                           ));
-                      setState(() {
-                        players.clear();
-                      });
                     } else {
                       await showDialog(
                           context: context,
