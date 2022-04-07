@@ -10,6 +10,6 @@ class BoolProperty implements Property<bool> {
 
   @override
   void set(bool value) {
-    value = value;
+    this.value = value;
   }
 }
