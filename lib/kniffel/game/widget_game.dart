@@ -1,20 +1,20 @@
+import 'package:classic_games/property/bool_property.dart';
+import 'package:classic_games/property/property.dart';
 import 'package:flutter/material.dart';
 import 'package:classic_games/kniffel/game/game.dart';
 import 'package:classic_games/kniffel/player/player.dart';
 import 'package:classic_games/kniffel/widget/gameover_widget.dart';
-import 'package:classic_games/store/property_container.dart';
-import 'package:classic_games/store/store.dart';
 import 'package:classic_games/widget/quit_game_button.dart';
 
 class WidgetGame extends StatefulWidget implements Game {
   WidgetGame(this._players, {Key? key})
       : _finishedPlayers = [],
-        pausedStore = PropertyStore(false),
+        paused = BoolProperty(false),
         super(key: key);
 
   final List<Player> _players;
   final List<List<Player>> _finishedPlayers;
-  final Store<bool> pausedStore;
+  final Property<bool> paused;
 
   @override
   State<WidgetGame> createState() => _WidgetGameState();
@@ -24,12 +24,12 @@ class WidgetGame extends StatefulWidget implements Game {
 
   @override
   void pause() {
-    pausedStore.set(true);
+    paused.set(true);
   }
 
   @override
   void play() {
-    pausedStore.set(false);
+    paused.set(false);
   }
 }
 
@@ -113,19 +113,19 @@ class _WidgetGameState extends State<WidgetGame> {
               final player = players[i];
               await player.turn();
 
-              if (widget.pausedStore.get()) {
+              if (widget.paused.get()) {
                 break;
               }
             }
 
-            if (widget.pausedStore.get()) {
+            if (widget.paused.get()) {
               break;
             }
 
             currentPlayerIndex = 0;
           }
 
-          if (!widget.pausedStore.get()) {
+          if (!widget.paused.get()) {
             List<int> scores = [];
             for (final player in players) {
               final playerTotalScore = player.score().total();

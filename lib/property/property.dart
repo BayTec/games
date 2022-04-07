@@ -1,4 +1,4 @@
-abstract class Store<T> {
+abstract class Property<T> {
   T get();
   void set(T value);
 }
