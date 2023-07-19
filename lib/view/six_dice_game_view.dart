@@ -44,72 +44,75 @@ class _SixDiceGameViewState
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    child: Table(
-                      border: TableBorder.all(
-                        color: Theme.of(context).colorScheme.outline,
-                        width: 1.0,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
-                      ),
-                      defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                      children: [
-                        const TableRow(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(4),
-                              child: Text('Place'),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(4),
-                              child: Text(
-                                'Player',
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(4),
-                              child: Text(
-                                'Score',
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          ],
+              MaterialHero(
+                tag: 'six-dice',
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SingleChildScrollView(
+                      child: Table(
+                        border: TableBorder.all(
+                          color: Theme.of(context).colorScheme.outline,
+                          width: 1.0,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4.0)),
                         ),
-                        ...List.generate(winners.length, (index) {
-                          final player = winners[index];
-
-                          return TableRow(
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
+                        children: [
+                          const TableRow(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: Text(
-                                  '${index + 1}.',
-                                  textAlign: TextAlign.start,
-                                ),
+                                padding: EdgeInsets.all(4),
+                                child: Text('Place'),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(4),
+                                padding: EdgeInsets.all(4),
                                 child: Text(
-                                  player.name,
+                                  'Player',
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(4),
+                                padding: EdgeInsets.all(4),
                                 child: Text(
-                                  player.score.toString(),
-                                  textAlign: TextAlign.end,
+                                  'Score',
+                                  textAlign: TextAlign.right,
                                 ),
                               ),
                             ],
-                          );
-                        }),
-                      ],
+                          ),
+                          ...List.generate(winners.length, (index) {
+                            final player = winners[index];
+
+                            return TableRow(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Text(
+                                    '${index + 1}.',
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Text(
+                                    player.name,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Text(
+                                    player.score.toString(),
+                                    textAlign: TextAlign.end,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ],
+                      ),
                     ),
                   ),
                 ),
