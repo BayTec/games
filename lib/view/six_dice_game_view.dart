@@ -31,7 +31,7 @@ class _SixDiceGameViewState
 
   @override
   Widget buildView(BuildContext context) {
-    if (viewModel.gameOver) {
+    if (viewModel.gameState == GameState.over) {
       final winners = [...viewModel.players];
       winners.sort((a, b) => b.score.compareTo(a.score));
 

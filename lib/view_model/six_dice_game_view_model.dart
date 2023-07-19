@@ -6,14 +6,17 @@ class SixDiceGameViewModel extends ViewModel {
 
   SixDiceGameViewModel({
     required SixDiceGame game,
-  }) : _game = game;
+  }) : _game = game {
+    _game.subscribe((game) {
+      notifyListeners();
+    });
+  }
 
   List<Player> get players => _game.players;
   Player get currentPlayer => _game.currentPlayer;
-  bool get gameOver => _game.over;
+  GameState get gameState => _game.gameState;
 
   void next() {
     _game.next();
-    notifyListeners();
   }
 }
