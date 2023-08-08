@@ -10,17 +10,25 @@ class DartsGame {
   final StreamController<DartsGame> _controller;
   final List<Player> _players;
   final List<Player> _winners;
+  final int _points;
+  final bool _doubleOut;
   int _currentPlayer;
   GameState _gameState;
 
   DartsGame({
     required List<Player> players,
+    int points = 301,
+    bool doubleOut = false,
   })  : _controller = StreamController.broadcast(),
         _players = players,
+        _points = points,
+        _doubleOut = doubleOut,
         _winners = [],
         _currentPlayer = 0,
         _gameState = GameState.ongoing;
 
+  int get points => _points;
+  bool get doubleOut => _doubleOut;
   List<Player> get players => _players;
   List<Player> get winners => _winners;
   Player get currentPlayer => _players[_currentPlayer];
@@ -29,12 +37,29 @@ class DartsGame {
   void next() {
     if (_gameState == GameState.over) return;
 
-    // TODO: replace 301 with variable
-    if (_players[_currentPlayer].score > 301) {
+    if (_players[_currentPlayer].score > _points) {
       _players[_currentPlayer].invalidateLastTurn();
-    } else if (_players[_currentPlayer].score == 301) {
+    }
+
+    if (_doubleOut && _players[_currentPlayer].score == _points) {
+      final turn = _players[_currentPlayer].turns.last;
+      final lastThrow = turn.third.score != 0
+          ? turn.third
+          : turn.second.score != 0
+              ? turn.second
+              : turn.first;
+
+      if (lastThrow.modifier != Modifier.double) {
+        _players[_currentPlayer].invalidateLastTurn();
+      }
+    }
+
+    if (_players[_currentPlayer].score == _points) {
+      final playerBefore =
+          _currentPlayer > 0 ? _players[_currentPlayer - 1] : _players.last;
       _winners.add(_players[_currentPlayer]);
       _players.removeAt(_currentPlayer);
+      _currentPlayer = _players.indexOf(playerBefore);
     }
 
     if (_players.length <= 1) {

@@ -15,9 +15,13 @@ class DartsCreateView extends StatefulWidget {
 class _DartsCreateViewState
     extends mvvm.View<DartsCreateView, DartsCreateViewModel> {
   final TextEditingController _nameController;
+  int _points;
+  bool _doubleOut;
 
   _DartsCreateViewState()
       : _nameController = TextEditingController(),
+        _points = 301,
+        _doubleOut = false,
         super(DartsCreateViewModel());
 
   @override
@@ -78,6 +82,67 @@ class _DartsCreateViewState
             ),
           ),
           Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FilledButton.icon(
+                        onPressed: _points != 301
+                            ? () => setState(() => _points = 301)
+                            : null,
+                        icon: _points == 301
+                            ? const Icon(Icons.check_box_outlined)
+                            : const Icon(Icons.check_box_outline_blank),
+                        label: const Text('301'),
+                      ),
+                      FilledButton.icon(
+                        onPressed: _points != 501
+                            ? () => setState(() => _points = 501)
+                            : null,
+                        icon: _points == 501
+                            ? const Icon(Icons.check_box_outlined)
+                            : const Icon(Icons.check_box_outline_blank),
+                        label: const Text('501'),
+                      ),
+                      FilledButton.icon(
+                        onPressed: _points != 701
+                            ? () => setState(() => _points = 701)
+                            : null,
+                        icon: _points == 701
+                            ? const Icon(Icons.check_box_outlined)
+                            : const Icon(Icons.check_box_outline_blank),
+                        label: const Text('701'),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text('Double Out'),
+                      Switch(
+                        value: _doubleOut,
+                        onChanged: (value) =>
+                            setState(() => _doubleOut = value),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 40.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +171,10 @@ class _DartsCreateViewState
             context,
             MaterialPageRoute(
                 builder: (context) => DartsGameView(
-                      game: viewModel.createGame(),
+                      game: viewModel.createGame(
+                        points: _points,
+                        doubleOut: _doubleOut,
+                      ),
                     ))),
         child: const Icon(Icons.play_arrow),
       ),

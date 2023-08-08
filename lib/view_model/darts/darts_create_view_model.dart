@@ -20,5 +20,9 @@ class DartsCreateViewModel extends ViewModel {
     notifyListeners();
   }
 
-  DartsGame createGame() => DartsGame(players: _players);
+  DartsGame createGame({
+    int points = 301,
+    bool doubleOut = false,
+  }) =>
+      DartsGame(players: _players, points: points, doubleOut: doubleOut);
 }

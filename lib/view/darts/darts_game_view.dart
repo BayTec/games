@@ -168,8 +168,7 @@ class _SixDiceGameViewState
                               Padding(
                                 padding: const EdgeInsets.all(4),
                                 child: Text(
-                                  // TODO: replace 301 with variable
-                                  (301 - player.score).toString(),
+                                  (viewModel.points - player.score).toString(),
                                   textAlign: TextAlign.end,
                                 ),
                               ),

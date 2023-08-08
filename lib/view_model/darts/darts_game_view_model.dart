@@ -16,6 +16,7 @@ class DartsGameViewModel extends ViewModel {
   List<Player> get winners => _game.winners;
   Player get currentPlayer => _game.currentPlayer;
   GameState get gameState => _game.gameState;
+  int get points => _game.points;
 
   void next() {
     _game.next();
