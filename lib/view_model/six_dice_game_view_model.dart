@@ -1,5 +1,5 @@
-import 'package:classic_games/mvvm/view_model.dart';
-import 'package:classic_games/src/games/six_dice/six_dice_game.dart';
+import 'package:games/mvvm/view_model.dart';
+import 'package:games/src/games/six_dice/six_dice_game.dart';
 
 class SixDiceGameViewModel extends ViewModel {
   final SixDiceGame _game;

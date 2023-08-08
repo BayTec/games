@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:classic_games/component/outlined_text_field.dart';
+import 'package:games/component/outlined_text_field.dart';
 
 class TextFormFieldDialog extends StatelessWidget {
   TextFormFieldDialog({

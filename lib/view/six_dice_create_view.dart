@@ -1,10 +1,10 @@
-import 'package:classic_games/component/material_hero.dart';
-import 'package:classic_games/component/outlined_text_field.dart';
-import 'package:classic_games/src/games/six_dice/six_dice_game.dart';
-import 'package:classic_games/view/six_dice_game_view.dart';
-import 'package:classic_games/view_model/six_dice_create_view_model.dart';
+import 'package:games/component/material_hero.dart';
+import 'package:games/component/outlined_text_field.dart';
+import 'package:games/src/games/six_dice/six_dice_game.dart';
+import 'package:games/view/six_dice_game_view.dart';
+import 'package:games/view_model/six_dice_create_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:classic_games/mvvm/view.dart' as mvvm;
+import 'package:games/mvvm/view.dart' as mvvm;
 
 class SixDiceCreateView extends StatefulWidget {
   const SixDiceCreateView({Key? key}) : super(key: key);

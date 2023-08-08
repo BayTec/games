@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:classic_games/mvvm/view_model.dart';
+import 'package:games/mvvm/view_model.dart';
 
 abstract class View<SW extends StatefulWidget, VM extends ViewModel>
     extends State<SW> {

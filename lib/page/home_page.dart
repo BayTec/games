@@ -1,5 +1,5 @@
-import 'package:classic_games/component/material_hero.dart';
-import 'package:classic_games/view/six_dice_create_view.dart';
+import 'package:games/component/material_hero.dart';
+import 'package:games/view/six_dice_create_view.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

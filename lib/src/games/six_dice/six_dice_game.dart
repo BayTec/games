@@ -2,8 +2,8 @@ library six_dice_game;
 
 import 'dart:async';
 
-import 'package:classic_games/src/dice.dart';
-import 'package:classic_games/src/six_sided_dice.dart';
+import 'package:games/src/dice.dart';
+import 'package:games/src/six_sided_dice.dart';
 
 part './player/player.dart';
 part './player/bot_player.dart';

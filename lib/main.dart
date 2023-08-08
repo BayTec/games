@@ -1,4 +1,4 @@
-import 'package:classic_games/page/home_page.dart';
+import 'package:games/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'color_schemes.dart';
 

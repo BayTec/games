@@ -1,6 +1,6 @@
 {
-    "name": "classic_games",
-    "short_name": "classic_games",
+    "name": "games",
+    "short_name": "games",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

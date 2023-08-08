@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "classic_games",
+            "name": "games",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "classic_games (profile mode)",
+            "name": "games (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "classic_games (release mode)",
+            "name": "games (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

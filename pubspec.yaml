@@ -1,5 +1,5 @@
-name: classic_games
-description: An App to play classic dice games.
+name: games
+description: An App to play games.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
