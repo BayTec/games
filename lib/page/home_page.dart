@@ -1,5 +1,6 @@
 import 'package:games/component/material_hero.dart';
-import 'package:games/view/six_dice_create_view.dart';
+import 'package:games/view/darts/darts_create_view.dart';
+import 'package:games/view/six_dice/six_dice_create_view.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -28,7 +29,18 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const SixDiceCreateView())),
               ),
-            )
+            ),
+            MaterialHero(
+              tag: 'darts',
+              child: _GameCard(
+                title: 'Darts',
+                description: '',
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DartsCreateView())),
+              ),
+            ),
           ],
         ),
       ),

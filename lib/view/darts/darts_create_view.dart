@@ -1,27 +1,24 @@
 import 'package:games/component/material_hero.dart';
 import 'package:games/component/outlined_text_field.dart';
-import 'package:games/src/games/six_dice/six_dice_game.dart';
-import 'package:games/view/six_dice_game_view.dart';
-import 'package:games/view_model/six_dice_create_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:games/mvvm/view.dart' as mvvm;
+import 'package:games/view/darts/darts_game_view.dart';
+import 'package:games/view_model/darts/darts_create_view_model.dart';
 
-class SixDiceCreateView extends StatefulWidget {
-  const SixDiceCreateView({Key? key}) : super(key: key);
+class DartsCreateView extends StatefulWidget {
+  const DartsCreateView({Key? key}) : super(key: key);
 
   @override
-  State<SixDiceCreateView> createState() => _SixDiceCreateViewState();
+  State<DartsCreateView> createState() => _DartsCreateViewState();
 }
 
-class _SixDiceCreateViewState
-    extends mvvm.View<SixDiceCreateView, SixDiceCreateViewModel> {
+class _DartsCreateViewState
+    extends mvvm.View<DartsCreateView, DartsCreateViewModel> {
   final TextEditingController _nameController;
-  bool _bot;
 
-  _SixDiceCreateViewState()
+  _DartsCreateViewState()
       : _nameController = TextEditingController(),
-        _bot = false,
-        super(SixDiceCreateViewModel());
+        super(DartsCreateViewModel());
 
   @override
   void dispose() {
@@ -33,7 +30,7 @@ class _SixDiceCreateViewState
   @override
   Widget buildView(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Six Dice')),
+      appBar: AppBar(title: const Text('Darts')),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,7 +40,7 @@ class _SixDiceCreateViewState
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialHero(
-                tag: 'six-dice',
+                tag: 'darts',
                 child: Card(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -64,9 +61,7 @@ class _SixDiceCreateViewState
                           itemBuilder: (context, index) {
                             final player = viewModel.players[index];
                             return ListTile(
-                              leading: player.runtimeType == InputPlayer
-                                  ? const Icon(Icons.person)
-                                  : const Icon(Icons.computer),
+                              leading: const Icon(Icons.person),
                               title: Text(player.name),
                               trailing: IconButton(
                                 icon: const Icon(Icons.delete),
@@ -93,23 +88,9 @@ class _SixDiceCreateViewState
                   label: 'Name',
                   keyboardType: TextInputType.name,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text('Bot'),
-                      Switch(
-                        value: _bot,
-                        onChanged: (value) => setState(() => _bot = value),
-                      ),
-                    ],
-                  ),
-                ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    viewModel.addPlayer(_nameController.text, _bot);
+                    viewModel.addPlayer(_nameController.text);
                     _nameController.clear();
                   },
                   icon: const Icon(Icons.add),
@@ -124,7 +105,7 @@ class _SixDiceCreateViewState
         onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => SixDiceGameView(
+                builder: (context) => DartsGameView(
                       game: viewModel.createGame(),
                     ))),
         child: const Icon(Icons.play_arrow),
