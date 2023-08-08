@@ -1,3 +1,3 @@
-# Classic Games
+# Games
 
-This is a flutter project to play different kinds of dice games.
+This is a flutter project to play different kinds of games.
