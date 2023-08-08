@@ -41,15 +41,25 @@ class DartsGame {
       _players[_currentPlayer].invalidateLastTurn();
     }
 
-    if (_doubleOut && _players[_currentPlayer].score == _points) {
-      final turn = _players[_currentPlayer].turns.last;
-      final lastThrow = turn.third.score != 0
-          ? turn.third
-          : turn.second.score != 0
-              ? turn.second
-              : turn.first;
+    if (_doubleOut) {
+      bool invalidate = false;
+      if ((_points - _players[_currentPlayer].score) == 1) {
+        invalidate = true;
+      }
 
-      if (lastThrow.modifier != Modifier.double) {
+      if (_players[_currentPlayer].score == _points) {
+        final turn = _players[_currentPlayer].turns.last;
+        final lastThrow = turn.third.score != 0
+            ? turn.third
+            : turn.second.score != 0
+                ? turn.second
+                : turn.first;
+        if (lastThrow.modifier != Modifier.double) {
+          invalidate = true;
+        }
+      }
+
+      if (invalidate) {
         _players[_currentPlayer].invalidateLastTurn();
       }
     }
