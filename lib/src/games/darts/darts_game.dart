@@ -86,6 +86,19 @@ class DartsGame {
     _notifyListeners();
   }
 
+  void reset() {
+    final participants = [...players, ...winners];
+
+    winners.clear();
+    players.clear();
+
+    players.addAll(participants.map((e) => Player(e.name)));
+
+    _gameState = GameState.ongoing;
+
+    _notifyListeners();
+  }
+
   StreamSubscription<DartsGame> subscribe(void Function(DartsGame) listener) {
     final subscription = _controller.stream.listen(listener);
     return subscription;

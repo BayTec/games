@@ -18,7 +18,6 @@ class DartsGameViewModel extends ViewModel {
   GameState get gameState => _game.gameState;
   int get points => _game.points;
 
-  void next() {
-    _game.next();
-  }
+  void next() => _game.next();
+  void reset() => _game.reset();
 }

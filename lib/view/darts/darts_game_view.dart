@@ -40,7 +40,15 @@ class _SixDiceGameViewState
       final winners = [...viewModel.winners, ...viewModel.players];
 
       return Scaffold(
-        appBar: AppBar(title: const Text('Results')),
+        appBar: AppBar(
+          title: const Text('Results'),
+          leading: BackButton(
+            onPressed: () {
+              viewModel.reset();
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
