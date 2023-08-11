@@ -9,6 +9,7 @@ part 'player.dart';
 class DartsGame {
   final StreamController<DartsGame> _controller;
   final List<Player> _players;
+  final List<Player> _activePlayers;
   final List<Player> _winners;
   final int _points;
   final bool _doubleOut;
@@ -21,6 +22,7 @@ class DartsGame {
     bool doubleOut = false,
   })  : _controller = StreamController.broadcast(),
         _players = players,
+        _activePlayers = [...players],
         _points = points,
         _doubleOut = doubleOut,
         _winners = [],
@@ -30,25 +32,26 @@ class DartsGame {
   int get points => _points;
   bool get doubleOut => _doubleOut;
   List<Player> get players => _players;
+  List<Player> get activePlayers => _activePlayers;
   List<Player> get winners => _winners;
-  Player get currentPlayer => _players[_currentPlayer];
+  Player get currentPlayer => _activePlayers[_currentPlayer];
   GameState get gameState => _gameState;
 
   void next() {
     if (_gameState == GameState.over) return;
 
-    if (_players[_currentPlayer].score > _points) {
-      _players[_currentPlayer].invalidateLastTurn();
+    if (_activePlayers[_currentPlayer].score > _points) {
+      _activePlayers[_currentPlayer].invalidateLastTurn();
     }
 
     if (_doubleOut) {
       bool invalidate = false;
-      if ((_points - _players[_currentPlayer].score) == 1) {
+      if ((_points - _activePlayers[_currentPlayer].score) == 1) {
         invalidate = true;
       }
 
-      if (_players[_currentPlayer].score == _points) {
-        final turn = _players[_currentPlayer].turns.last;
+      if (_activePlayers[_currentPlayer].score == _points) {
+        final turn = _activePlayers[_currentPlayer].turns.last;
         final lastThrow = turn.third.score != 0
             ? turn.third
             : turn.second.score != 0
@@ -60,26 +63,25 @@ class DartsGame {
       }
 
       if (invalidate) {
-        _players[_currentPlayer].invalidateLastTurn();
+        _activePlayers[_currentPlayer].invalidateLastTurn();
       }
     }
 
-    if (_players[_currentPlayer].score == _points) {
-      final playerBefore =
-          _currentPlayer > 0 ? _players[_currentPlayer - 1] : _players.last;
-      _winners.add(_players[_currentPlayer]);
-      _players.removeAt(_currentPlayer);
-      _currentPlayer = _players.indexOf(playerBefore);
+    if (_activePlayers[_currentPlayer].score == _points) {
+      _winners.add(_activePlayers[_currentPlayer]);
+      _activePlayers.removeAt(_currentPlayer);
+      _currentPlayer =
+          _currentPlayer > 0 ? _currentPlayer - 1 : _activePlayers.length - 1;
     }
 
-    if (_players.length <= 1) {
+    if (_activePlayers.length <= 1) {
       _gameState = GameState.over;
       _notifyListeners();
       return;
     }
 
     _currentPlayer++;
-    if (_currentPlayer > _players.length - 1) {
+    if (_currentPlayer > _activePlayers.length - 1) {
       _currentPlayer = 0;
     }
 
@@ -87,12 +89,16 @@ class DartsGame {
   }
 
   void reset() {
-    final participants = [...players, ...winners];
+    for (final player in _players) {
+      player.reset();
+    }
 
-    winners.clear();
-    players.clear();
+    _winners.clear();
+    _activePlayers.clear();
 
-    players.addAll(participants.map((e) => Player(e.name)));
+    _activePlayers.addAll(_players);
+
+    _currentPlayer = 0;
 
     _gameState = GameState.ongoing;
 

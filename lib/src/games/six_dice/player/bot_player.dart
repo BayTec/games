@@ -5,7 +5,7 @@ class BotPlayer extends Player {
 
   final String _name;
   int _score;
-  _Turn? _lastTurn;
+  Turn? _lastTurn;
 
   BotPlayer({
     required String name,
@@ -16,9 +16,9 @@ class BotPlayer extends Player {
   String get name => _name;
   @override
   int get score => _score;
-  _Turn? get lastTurn => _lastTurn;
+  Turn? get lastTurn => _lastTurn;
 
-  _Turn turn() {
+  Turn turn() {
     final dices = <Dice>[
       SixSidedDice(),
       SixSidedDice(),
@@ -157,21 +157,11 @@ class BotPlayer extends Player {
     }
 
     _score += turnScore;
-    _lastTurn = _Turn(
+    _lastTurn = Turn(
       rolls: rolls,
       score: turnScore,
     );
 
     return _lastTurn!;
   }
-}
-
-class _Turn {
-  final List<List<int>> rolls;
-  final int score;
-
-  _Turn({
-    required this.rolls,
-    required this.score,
-  });
 }

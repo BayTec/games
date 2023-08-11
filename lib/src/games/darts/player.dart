@@ -22,4 +22,5 @@ class Player {
 
   void turn(Turn turn) => _turns.add(turn);
   void invalidateLastTurn() => _turns.last.invalidate();
+  void reset() => _turns.clear();
 }

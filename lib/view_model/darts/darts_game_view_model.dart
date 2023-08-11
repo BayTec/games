@@ -12,7 +12,7 @@ class DartsGameViewModel extends ViewModel {
     });
   }
 
-  List<Player> get players => _game.players;
+  List<Player> get activePlayers => _game.activePlayers;
   List<Player> get winners => _game.winners;
   Player get currentPlayer => _game.currentPlayer;
   GameState get gameState => _game.gameState;

@@ -8,6 +8,7 @@ import 'package:games/src/six_sided_dice.dart';
 part './player/player.dart';
 part './player/bot_player.dart';
 part './player/input_player.dart';
+part './turn.dart';
 
 class SixDiceGame {
   final StreamController<SixDiceGame> _controller;

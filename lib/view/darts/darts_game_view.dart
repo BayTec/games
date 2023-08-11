@@ -37,7 +37,7 @@ class _SixDiceGameViewState
   @override
   Widget buildView(BuildContext context) {
     if (viewModel.gameState == GameState.over) {
-      final winners = [...viewModel.winners, ...viewModel.players];
+      final winners = [...viewModel.winners, ...viewModel.activePlayers];
 
       return Scaffold(
         appBar: AppBar(
@@ -161,8 +161,9 @@ class _SixDiceGameViewState
                             ),
                           ],
                         ),
-                        ...List.generate(viewModel.players.length, (index) {
-                          final player = viewModel.players[index];
+                        ...List.generate(viewModel.activePlayers.length,
+                            (index) {
+                          final player = viewModel.activePlayers[index];
 
                           return TableRow(
                             children: [
