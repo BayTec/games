@@ -2,9 +2,7 @@ import 'package:games/component/material_hero.dart';
 import 'package:games/component/outlined_text_field.dart';
 import 'package:games/src/games/six_dice/six_dice_game.dart';
 import 'package:games/view/six_dice/six_dice_game_view.dart';
-import 'package:games/view_model/six_dice/six_dice_create_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:games/mvvm/view.dart' as mvvm;
 
 class SixDiceCreateView extends StatefulWidget {
   const SixDiceCreateView({Key? key}) : super(key: key);
@@ -13,15 +11,16 @@ class SixDiceCreateView extends StatefulWidget {
   State<SixDiceCreateView> createState() => _SixDiceCreateViewState();
 }
 
-class _SixDiceCreateViewState
-    extends mvvm.View<SixDiceCreateView, SixDiceCreateViewModel> {
+class _SixDiceCreateViewState extends State<SixDiceCreateView> {
+  final List<Player> _players;
   final TextEditingController _nameController;
   bool _bot;
 
   _SixDiceCreateViewState()
-      : _nameController = TextEditingController(),
+      : _players = [],
+        _nameController = TextEditingController(),
         _bot = false,
-        super(SixDiceCreateViewModel());
+        super();
 
   @override
   void dispose() {
@@ -31,7 +30,7 @@ class _SixDiceCreateViewState
   }
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Six Dice')),
       body: Column(
@@ -59,10 +58,10 @@ class _SixDiceCreateViewState
                       ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: viewModel.players.length,
+                          itemCount: _players.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            final player = viewModel.players[index];
+                            final player = _players[index];
                             return ListTile(
                               leading: player.runtimeType == InputPlayer
                                   ? const Icon(Icons.person)
@@ -70,7 +69,8 @@ class _SixDiceCreateViewState
                               title: Text(player.name),
                               trailing: IconButton(
                                 icon: const Icon(Icons.delete),
-                                onPressed: () => viewModel.removePlayer(index),
+                                onPressed: () =>
+                                    setState(() => _players.removeAt(index)),
                               ),
                             );
                           },
@@ -108,10 +108,12 @@ class _SixDiceCreateViewState
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    viewModel.addPlayer(_nameController.text, _bot);
+                  onPressed: () => setState(() {
+                    _players.add(_bot
+                        ? BotPlayer(name: _nameController.text)
+                        : InputPlayer(name: _nameController.text));
                     _nameController.clear();
-                  },
+                  }),
                   icon: const Icon(Icons.add),
                   label: const Text('Add Player'),
                 ),
@@ -125,7 +127,7 @@ class _SixDiceCreateViewState
             context,
             MaterialPageRoute(
                 builder: (context) => SixDiceGameView(
-                      game: viewModel.createGame(),
+                      game: SixDiceGame(players: _players),
                     ))),
         child: const Icon(Icons.play_arrow),
       ),

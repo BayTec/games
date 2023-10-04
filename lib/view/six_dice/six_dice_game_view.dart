@@ -1,9 +1,9 @@
+import 'dart:async';
+
 import 'package:games/component/material_hero.dart';
 import 'package:games/component/outlined_text_field.dart';
 import 'package:games/src/games/six_dice/six_dice_game.dart';
-import 'package:games/view_model/six_dice/six_dice_game_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:games/mvvm/view.dart' as mvvm;
 
 class SixDiceGameView extends StatefulWidget {
   const SixDiceGameView({super.key, required SixDiceGame game}) : _game = game;
@@ -11,28 +11,34 @@ class SixDiceGameView extends StatefulWidget {
   final SixDiceGame _game;
 
   @override
-  // ignore: no_logic_in_create_state
-  State<SixDiceGameView> createState() => _SixDiceGameViewState(game: _game);
+  State<SixDiceGameView> createState() => _SixDiceGameViewState();
 }
 
-class _SixDiceGameViewState
-    extends mvvm.View<SixDiceGameView, SixDiceGameViewModel> {
+class _SixDiceGameViewState extends State<SixDiceGameView> {
   final TextEditingController _inputController;
+  late final StreamSubscription<SixDiceGame> _gameSubscription;
 
-  _SixDiceGameViewState({required SixDiceGame game})
+  _SixDiceGameViewState()
       : _inputController = TextEditingController(),
-        super(SixDiceGameViewModel(game: game));
+        super();
+
+  @override
+  void initState() {
+    super.initState();
+    _gameSubscription = widget._game.subscribe((game) => setState(() {}));
+  }
 
   @override
   void dispose() {
     _inputController.dispose();
+    _gameSubscription.cancel();
     super.dispose();
   }
 
   @override
-  Widget buildView(BuildContext context) {
-    if (viewModel.gameState == GameState.over) {
-      final winners = [...viewModel.players];
+  Widget build(BuildContext context) {
+    if (widget._game.gameState == GameState.over) {
+      final winners = [...widget._game.players];
       winners.sort((a, b) => b.score.compareTo(a.score));
 
       return Scaffold(
@@ -163,8 +169,8 @@ class _SixDiceGameViewState
                             ),
                           ],
                         ),
-                        ...List.generate(viewModel.players.length, (index) {
-                          final player = viewModel.players[index];
+                        ...List.generate(widget._game.players.length, (index) {
+                          final player = widget._game.players[index];
 
                           return TableRow(
                             children: [
@@ -193,13 +199,13 @@ class _SixDiceGameViewState
             ),
             const Spacer(),
             Text(
-              "${viewModel.currentPlayer.name}'s turn!",
+              "${widget._game.currentPlayer.name}'s turn!",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Builder(
               builder: (context) {
-                if (viewModel.currentPlayer.runtimeType == InputPlayer) {
+                if (widget._game.currentPlayer.runtimeType == InputPlayer) {
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(8.0, 8.0, 80.0, 0.0),
                     child: OutlinedTextField(
@@ -207,8 +213,9 @@ class _SixDiceGameViewState
                       label: 'Score',
                     ),
                   );
-                } else if (viewModel.currentPlayer.runtimeType == BotPlayer) {
-                  final botPlayer = viewModel.currentPlayer as BotPlayer;
+                } else if (widget._game.currentPlayer.runtimeType ==
+                    BotPlayer) {
+                  final botPlayer = widget._game.currentPlayer as BotPlayer;
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 40.0),
                     child: Column(
@@ -257,12 +264,12 @@ class _SixDiceGameViewState
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (viewModel.currentPlayer.runtimeType == InputPlayer) {
-            (viewModel.currentPlayer as InputPlayer)
+          if (widget._game.currentPlayer.runtimeType == InputPlayer) {
+            (widget._game.currentPlayer as InputPlayer)
                 .turn(int.tryParse(_inputController.text) ?? 0);
             _inputController.clear();
           }
-          viewModel.next();
+          widget._game.next();
         },
         child: const Icon(Icons.arrow_forward),
       ),

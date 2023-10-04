@@ -1,9 +1,8 @@
 import 'package:games/component/material_hero.dart';
 import 'package:games/component/outlined_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:games/mvvm/view.dart' as mvvm;
+import 'package:games/src/games/darts/darts_game.dart';
 import 'package:games/view/darts/darts_game_view.dart';
-import 'package:games/view_model/darts/darts_create_view_model.dart';
 
 class DartsCreateView extends StatefulWidget {
   const DartsCreateView({Key? key}) : super(key: key);
@@ -12,17 +11,18 @@ class DartsCreateView extends StatefulWidget {
   State<DartsCreateView> createState() => _DartsCreateViewState();
 }
 
-class _DartsCreateViewState
-    extends mvvm.View<DartsCreateView, DartsCreateViewModel> {
+class _DartsCreateViewState extends State<DartsCreateView> {
   final TextEditingController _nameController;
+  final List<Player> _players;
   int _points;
   bool _doubleOut;
 
   _DartsCreateViewState()
       : _nameController = TextEditingController(),
+        _players = [],
         _points = 301,
         _doubleOut = false,
-        super(DartsCreateViewModel());
+        super();
 
   @override
   void dispose() {
@@ -32,7 +32,7 @@ class _DartsCreateViewState
   }
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Darts')),
       body: Column(
@@ -60,16 +60,17 @@ class _DartsCreateViewState
                       ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: viewModel.players.length,
+                          itemCount: _players.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            final player = viewModel.players[index];
+                            final player = _players[index];
                             return ListTile(
                               leading: const Icon(Icons.person),
                               title: Text(player.name),
                               trailing: IconButton(
                                 icon: const Icon(Icons.delete),
-                                onPressed: () => viewModel.removePlayer(index),
+                                onPressed: () =>
+                                    setState(() => _players.removeAt(index)),
                               ),
                             );
                           },
@@ -154,10 +155,10 @@ class _DartsCreateViewState
                   keyboardType: TextInputType.name,
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    viewModel.addPlayer(_nameController.text);
+                  onPressed: () => setState(() {
+                    _players.add(Player(_nameController.text));
                     _nameController.clear();
-                  },
+                  }),
                   icon: const Icon(Icons.add),
                   label: const Text('Add Player'),
                 ),
@@ -171,7 +172,8 @@ class _DartsCreateViewState
             context,
             MaterialPageRoute(
                 builder: (context) => DartsGameView(
-                      game: viewModel.createGame(
+                      game: DartsGame(
+                        players: _players,
                         points: _points,
                         doubleOut: _doubleOut,
                       ),
