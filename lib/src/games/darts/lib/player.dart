@@ -1,4 +1,4 @@
-part of 'darts_game.dart';
+import './turn.dart';
 
 class Player {
   final String _name;

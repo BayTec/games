@@ -1,4 +1,4 @@
-part of '../six_dice_game.dart';
+import './player.dart';
 
 class InputPlayer extends Player {
   final String _name;

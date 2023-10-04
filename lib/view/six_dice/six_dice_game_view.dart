@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:games/component/material_hero.dart';
 import 'package:games/component/outlined_text_field.dart';
-import 'package:games/src/games/six_dice/six_dice_game.dart';
+import 'package:games/src/games/six_dice/six_dice.dart';
 import 'package:flutter/material.dart';
 
 class SixDiceGameView extends StatefulWidget {

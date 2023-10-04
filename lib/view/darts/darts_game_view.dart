@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:games/component/material_hero.dart';
-import 'package:games/src/games/darts/darts_game.dart';
+import 'package:games/src/games/darts/darts.dart';
 import 'package:flutter/material.dart';
 
 class DartsGameView extends StatefulWidget {

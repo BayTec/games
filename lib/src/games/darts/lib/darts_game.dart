@@ -1,10 +1,7 @@
-library darts_game;
-
 import 'dart:async';
 
-part './turn.dart';
-part './throw.dart';
-part 'player.dart';
+import './player.dart';
+import './modifier.dart';
 
 class DartsGame {
   final StreamController<DartsGame> _controller;

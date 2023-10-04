@@ -1,4 +1,7 @@
-part of '../six_dice_game.dart';
+import 'package:games/src/tools/dice/dice.dart';
+
+import './player.dart';
+import '../turn.dart';
 
 class BotPlayer extends Player {
   static const maxDices = 6;

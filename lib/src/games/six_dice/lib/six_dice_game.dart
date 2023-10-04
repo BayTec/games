@@ -1,14 +1,7 @@
-library six_dice_game;
-
 import 'dart:async';
 
-import 'package:games/src/dice.dart';
-import 'package:games/src/six_sided_dice.dart';
-
-part './player/player.dart';
-part './player/bot_player.dart';
-part './player/input_player.dart';
-part './turn.dart';
+import './player/player.dart';
+import './player/bot_player.dart';
 
 class SixDiceGame {
   final StreamController<SixDiceGame> _controller;

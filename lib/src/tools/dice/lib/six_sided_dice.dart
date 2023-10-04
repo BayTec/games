@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:games/src/dice.dart';
+import './dice.dart';
 
 class SixSidedDice extends Dice {
   final List<int> _possibleValues;

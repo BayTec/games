@@ -1,4 +1,4 @@
-part of './darts_game.dart';
+import 'modifier.dart';
 
 class Throw {
   final int _number;
@@ -24,13 +24,4 @@ class Throw {
 
     return '$modifier$_number';
   }
-}
-
-enum Modifier {
-  signle(1),
-  double(2),
-  triple(3);
-
-  const Modifier(this.value);
-  final int value;
 }

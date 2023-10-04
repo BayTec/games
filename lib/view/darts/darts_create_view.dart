@@ -1,7 +1,7 @@
 import 'package:games/component/material_hero.dart';
 import 'package:games/component/outlined_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:games/src/games/darts/darts_game.dart';
+import 'package:games/src/games/darts/darts.dart';
 import 'package:games/view/darts/darts_game_view.dart';
 
 class DartsCreateView extends StatefulWidget {

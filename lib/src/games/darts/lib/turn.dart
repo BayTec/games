@@ -1,4 +1,4 @@
-part of './darts_game.dart';
+import './throw.dart';
 
 class Turn {
   final Throw _first;
